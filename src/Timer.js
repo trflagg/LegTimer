@@ -5,7 +5,7 @@ const Timer = ({ seconds }) => {
   let secondsRemaining = seconds % 60;
 
   if (secondsRemaining < 10) {
-    secondsRemaining += '0';
+    secondsRemaining = '0' + secondsRemaining;
   }
 
   return (

@@ -18,6 +18,7 @@ class App extends Component {
       cueSeconds: 60,
       lengthInMinutes: 6,
       seconds: 0,
+      running: false,
     };
   }
 
@@ -33,6 +34,29 @@ class App extends Component {
     });
   }
 
+  handleStartClick = () => {
+    if (!this.state.running) {
+      this.interval = setInterval(() => {
+        this.setState({
+          seconds: this.state.seconds+1,
+        });
+      }, 1000);
+
+      this.setState({
+        running: true,
+      });
+    }
+  }
+
+  handleStopClick = () => {
+    if (this.state.running) {
+      clearInterval(this.interval);
+      this.setState({
+        running: false,
+      });
+    }
+  }
+
   render() {
     const { cueSeconds, lengthInMinutes, seconds } = this.state;
     return (
@@ -42,6 +66,8 @@ class App extends Component {
         <p>Every <CueSeconds value={cueSeconds} onChange={this.handleCueSecondsChange} type='number' /> seconds play sound.</p>
 
         <Timer seconds={seconds} />
+        <button onClick={this.handleStartClick}>Start</button>
+        <button onClick={this.handleStopClick}>Stop</button>
       </div>
     );
   }

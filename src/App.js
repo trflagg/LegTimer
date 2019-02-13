@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Timer from './Timer';
+
 const LengthInput = styled.input`
   width: 3em;
 `;
@@ -13,8 +15,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lengthInMinutes: 6,
       cueSeconds: 60,
+      lengthInMinutes: 6,
+      seconds: 0,
     };
   }
 
@@ -31,12 +34,14 @@ class App extends Component {
   }
 
   render() {
-    const { cueSeconds, lengthInMinutes } = this.state;
+    const { cueSeconds, lengthInMinutes, seconds } = this.state;
     return (
       <div>
         <h1>Leg Timer</h1>
         <p>Run for <LengthInput value={lengthInMinutes} onChange={this.handleLengthChange} type='number'/> minutes</p>
         <p>Every <CueSeconds value={cueSeconds} onChange={this.handleCueSecondsChange} type='number' /> seconds play sound.</p>
+
+        <Timer seconds={seconds} />
       </div>
     );
   }

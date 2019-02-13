@@ -18,6 +18,7 @@ class App extends Component {
       cueSeconds: 60,
       lengthInMinutes: 6,
       seconds: 0,
+      secondsSinceCue: 0,
       running: false,
     };
   }
@@ -34,18 +35,29 @@ class App extends Component {
     });
   }
 
+  cue = () => {
+    console.log('CUE');
+  }
+
+  timerInterval = () => {
+    let newSecondsSinceCue = this.state.secondsSinceCue + 1;
+    if (newSecondsSinceCue >= this.state.cueSeconds) {
+      this.cue();
+      newSecondsSinceCue = 0;
+    }
+    this.setState({
+      seconds: this.state.seconds+1,
+      secondsSinceCue: newSecondsSinceCue,
+    });
+  }
+
   handleStartClick = () => {
     if (!this.state.running) {
-      this.interval = setInterval(() => {
-        this.setState({
-          seconds: this.state.seconds+1,
-        });
-      }, 1000);
-
-      this.setState({
-        running: true,
-      });
+      this.interval = setInterval(this.timerInterval, 1000);
     }
+    this.setState({
+      running: true,
+    });
   }
 
   handleStopClick = () => {

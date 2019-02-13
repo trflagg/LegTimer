@@ -11,6 +11,8 @@ const CueSeconds = styled.input`
   width: 4em;
 `;
 
+const SOUND_HOST = process.env.PUBLIC_URL;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +38,8 @@ class App extends Component {
   }
 
   cue = () => {
-    console.log('CUE');
+    var audio = new Audio(SOUND_HOST + '/chimes.mp3');
+    audio.play();
   }
 
   timerInterval = () => {
